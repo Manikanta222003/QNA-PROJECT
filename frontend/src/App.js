@@ -10,6 +10,21 @@ function App() {
   // Set your live Render backend URL here
   const BACKEND_URL = "https://qna-project.onrender.com";
 
+  // Helper function to convert URLs in text to clickable links
+  const renderTextWithLinks = (text) => {
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    const parts = text.split(urlRegex);
+    return parts.map((part, idx) =>
+      urlRegex.test(part) ? (
+        <a key={idx} href={part} target="_blank" rel="noopener noreferrer">
+          {part}
+        </a>
+      ) : (
+        part
+      )
+    );
+  };
+
   const handleAsk = async () => {
     if (!question.trim()) return;
 
@@ -51,7 +66,7 @@ function App() {
             key={idx}
             className={`chat-bubble ${chat.type === "user" ? "user" : "bot"}`}
           >
-            {chat.text}
+            {renderTextWithLinks(chat.text)}
           </div>
         ))}
 
