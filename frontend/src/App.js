@@ -16,11 +16,11 @@ function App() {
     setLoading(true);
 
     try {
-      const BACKEND_URL = "https://qna-project.onrender.com";
-
-      const response = await axios.post(`${BACKEND_URL}/chat`, {
-        question: userQuestion,
-});
+          const BACKEND_URL = "https://qna-project.onrender.com";
+    
+          const response = await axios.post(`${BACKEND_URL}/chat`, {
+            question: userQuestion,
+          });
       });
 
       const botAnswer = response.data.answer || "Sorry, I don't know the answer.";
