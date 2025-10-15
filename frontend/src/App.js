@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import "./App.css"; // we'll add styles and animations here
+import "./App.css"; // Add your styles and animations here
 
 function App() {
   const [question, setQuestion] = useState("");
   const [chatHistory, setChatHistory] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  // Set your live Render backend URL here
+  const BACKEND_URL = "https://qna-project.onrender.com";
 
   const handleAsk = async () => {
     if (!question.trim()) return;
@@ -16,16 +19,14 @@ function App() {
     setLoading(true);
 
     try {
-          const BACKEND_URL = "https://qna-project.onrender.com";
-    
-          const response = await axios.post(`${BACKEND_URL}/chat`, {
-            question: userQuestion,
-          });
+      // Make POST request to your live backend
+      const response = await axios.post(`${BACKEND_URL}/chat`, {
+        question: userQuestion,
       });
 
       const botAnswer = response.data.answer || "Sorry, I don't know the answer.";
 
-      // small delay to simulate typing animation
+      // Small delay to simulate typing animation
       setTimeout(() => {
         setChatHistory((prev) => [...prev, { type: "bot", text: botAnswer }]);
         setLoading(false);
@@ -36,6 +37,7 @@ function App() {
         { type: "bot", text: "Something went wrong. Please try again." },
       ]);
       setLoading(false);
+      console.error("Error calling backend:", error);
     }
   };
 
